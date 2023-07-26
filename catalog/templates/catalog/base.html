@@ -1,11 +1,12 @@
 {% load static %}
+{% load custom_tags %}
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
-    {#    <meta charset="utf-8">#}
-    {#    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
-    {#    <meta name="description" content="">#}
-    {#    <meta name="author" content="">#}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
     <title>{{ title }}</title>
 
@@ -14,82 +15,37 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/album.css' %}" rel="stylesheet">
-
+</head>
 <body>
 
-<header>
-    <div class="collapse bg-dark" id="navbarHeader">
-        <div class="container">
-            <div class="row">
-                {% include 'catalog/includes/inc_catalog_menu.html' %}
-            </div>
-        </div>
+<div class="container">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'catalog:home' %}">Домашняя страница</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'catalog:create_product' %}">Добавить продукт</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'catalog:contacts' %}">Контакты</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'catalog:blog' %}">Блог</a>
+        </li>
+
+    </ul>
+</div>
+
+<div class="container text-primary">
+    <div class="row justify-content-md-center">
+        <h1>{{ title|truncatechars:20 }}</h1>
     </div>
-    <div class="navbar navbar-dark bg-dark box-shadow">
-        <div class="container d-flex justify-content-between">
-            <a href="#" class="navbar-brand d-flex align-items-center">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
-                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </div>
-</header>
+</div>
 
-<main role="main">
 
-    <section class="jumbotron text-center">
-        <div class="container">
-            <h1 class="jumbotron-heading">{{ title }}</h1>
-        </div>
-    </section>
+{% block content %}
+{% endblock %}
 
-    <div class="album py-5 bg-light">
-        <div class="container">
-
-            <div class="row">
-                {% block content %}
-                {% endblock %}
-            </div>
-            {% if page_obj.has_other_pages %}
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        {% if page_obj.has_previous %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-                            </li>
-                        {% endif %}
-                        {% for p in paginator.page_range %}
-                            {% if page_obj.number == p %}
-                                <li class="page-item active" aria-current="page">
-                                    <a class="p-md-3">{{ p }}</a>
-                                </li>
-                            {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
-                                <a class="page-link" href="?page={{ p }}">{{ p }}</a>
-                            {% endif %}
-                        {% endfor %}
-                        {% if page_obj.has_next %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </nav>
-            {% endif %}
-        </div>
-    </div>
-
-</main>
-
-<footer class="text-muted">
-    <div class="container">
-        <p class="float-right">
-            <a href="#">Back to top</a>
-        </p>
-        <p>&copy; 2023 - {% now 'Y' %}</p>
-    </div>
-</footer>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -97,6 +53,7 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
 <script src="{% static 'js/popper.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/holder.min.js' %}"></script>
